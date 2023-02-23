@@ -31,7 +31,7 @@ for (let i = 0; i < allColorInputs.length; i++) {   // bind all colors/textfield
 }
 
 function updateTextField(event) {
-    event.target.textfield.value = event.target.value;
+    event.target.textfield.value = event.target.value.toUpperCase();
 }
 
 function updateColor(event) {
