@@ -18,7 +18,7 @@ const neutralColor = document.getElementById('neutral-color-picker');
 const neutralTextField = document.getElementById('neutral-color-value');
 
 // some other
-const path = "";
+const path = "C:\\Users\\Day\\Documents\\Battlefield 2042\\settings\\PROFSAVE_profile";
 
 const allTextfields = document.querySelectorAll('input[type="text"]');
 const allColorInputs = document.querySelectorAll('input[type="color"]');
@@ -72,4 +72,28 @@ function loadConfig() {
 
         updateAllColors();
     })
+}
+
+async function saveConfig() {
+    let fs = require('fs').promises;
+    console.log("Attempt to save")
+    let newColors = {
+        "GstRender.HUD-Primary": convertHexToInt(primaryTextField.value),
+        "GstRender.HUD-Accent": convertHexToInt(accentTextField.value),
+        "GstRender.HUD-Friendly": convertHexToInt(friendlyTextField.value),
+        "GstRender.HUD-Enemy": convertHexToInt(enemyTextField.value),
+        "GstRender.HUD-Squad": convertHexToInt(squadTextField.value),
+        "GstRender.HUD-Neutral": convertHexToInt(neutralTextField.value)
+    }
+
+    const configStrings = [
+        "GstRender.HUD-Primary", "GstRender.HUD-Accent", "GstRender.HUD-Friendly",
+        "GstRender.HUD-Enemy", "GstRender.HUD-Squad", "GstRender.HUD-Neutral"
+    ];
+    for await (searchstr of configStrings) {
+        const file = await fs.readFile(path, 'utf8');
+        let re = new RegExp('^.*' + searchstr + '.*$', 'gm')
+        let formatted = file.replace(re, `${searchstr} ${newColors[searchstr]}`);
+        await fs.writeFile(path, formatted, 'utf8');
+    }
 }
