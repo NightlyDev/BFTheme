@@ -1,16 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-    <link rel="stylesheet" href="index.css" />
-    <script defer src="render.js"></script>
-  </head>
-  <body>
-    <h1>BF Theme App</h1>
-    <button id="convert" onclick="convert()">Convert</button>
-    <p id="integer">Signed Integer</p>
-    <p id="hexadecimal">0xFF000000</p>
-    <p>forgor</p>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World!</title>
+  <link rel="stylesheet" href="index.css" />
+  <script defer src="render.js"></script>
+  <script defer src="convert.js"></script>
+</head>
+
+<body>
+  <h1>BF Theme App</h1>
+  <div id="color-box">
+    <div>
+      <p>Primary Color</p>
+      <input type="text" id="primary-color-value" name="primary-color-value" value="#FFFFFF">
+      <input type="color" id="primary-color-picker" name="primary-color-picker" value="#FFFFFF">
+    </div>
+    <div>
+      <p>Accent Color</p>
+      <input type="text" id="accent-color-value" name="accent-color-value" value="#FFFFFF">
+      <input type="color" id="accent-color-picker" name="accent-color-picker" value="#FFFFFF">
+    </div>
+    <div>
+      <p>Friendly Color</p>
+      <input type="text" id="friendly-color-value" name="friendly-color-value" value="#FFFFFF">
+      <input type="color" id="friendly-color-picker" name="friendly-color-picker" value="#FFFFFF">
+    </div>
+    <div>
+      <p>Enemy Color</p>
+      <input type="text" id="enemy-color-value" name="enemy-color-value" value="#FFFFFF">
+      <input type="color" id="enemy-color-picker" name="enemy-color-picker" value="#FFFFFF">
+    </div>
+    <div>
+      <p>Squad Color</p>
+      <input type="text" id="squad-color-value" name="squad-color-value" value="#FFFFFF">
+      <input type="color" id="squad-color-picker" name="squad-color-picker" value="#FFFFFF">
+    </div>
+    <div>
+      <p>Neutral Color</p>
+      <input type="text" id="neutral-color-value" name="neutral-color-value" value="#FFFFFF">
+      <input type="color" id="neutral-color-picker" name="neutral-color-picker" value="#FFFFFF">
+    </div>
+  </div>
+  <button id="load-button" onclick="loadConfig()">Load Config</button>
+  <button onclick="saveConfig()">Save Config</button>
+  <button onclick="backupConfig()">Backup Config</button>
+  <button onclick="importTheme()">Import Theme</button>
+  <button onclick="exportTheme()">Export Theme</button>
+</body>
+
 </html>
