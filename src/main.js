@@ -38,7 +38,6 @@ const createWindow = () => {
 app.whenReady().then(() => {
   ipcMain.handle('load-config', loadConfig);
   ipcMain.on('save-config', saveConfig);
-  ipcMain.on('import-theme', importTheme);
   createWindow();
 })
 
