@@ -19,27 +19,34 @@ const neutralTextField = document.getElementById('neutral-color-value');
 
 const allTextfields = document.querySelectorAll('input[type="text"]');
 const allColorInputs = document.querySelectorAll('input[type="color"]');
+const allColorBoxes = document.querySelectorAll('div.color-box');
 
 for (let i = 0; i < allColorInputs.length; i++) {   // bind all colors/textfields, add eventlisteners
     allColorInputs[i].textfield = allTextfields[i];
     allTextfields[i].color = allColorInputs[i];
+    allColorInputs[i].box = allColorBoxes[i];
+    allTextfields[i].box = allColorBoxes[i];
     allColorInputs[i].addEventListener("input", updateTextField, false);
     allTextfields[i].addEventListener("input", updateColor, false);
 }
 
 function updateTextField(event) {
     event.target.textfield.value = event.target.value.toUpperCase();
+    event.target.box.style.backgroundColor = event.target.value;
 }
 
 function updateColor(event) {
     event.target.color.value = event.target.value;
+    event.target.box.style.backgroundColor = event.target.value;
 }
 
 function updateAllColors() {
     allColorInputs.forEach(color => {
         color.value = color.textfield.value;
+        color.box.style.backgroundColor = color.textfield.value;
     })
 }
+
 
 async function exportTheme() {
     const { app, dialog } = require('electron');
