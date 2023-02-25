@@ -6,5 +6,6 @@ const { contextBridge, ipcRenderer } = require('electron')
 contextBridge.exposeInMainWorld('api', {
   loadConfig: () => ipcRenderer.invoke("load-config"),
   saveConfig: (newColors) => ipcRenderer.send('save-config', newColors),
+  backupConfig: () => ipcRenderer.send("backup-config"),
   importTheme: () => ipcRenderer.send("import-theme"),
 })

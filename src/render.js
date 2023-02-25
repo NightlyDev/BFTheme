@@ -98,3 +98,7 @@ document.getElementById("save-button").addEventListener("click", () => {
     }
     window.api.saveConfig(newColors);
 })
+
+document.getElementById("backup-button").addEventListener("click", () => {
+    window.api.backupConfig();
+})
