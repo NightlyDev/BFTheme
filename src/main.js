@@ -39,6 +39,7 @@ app.whenReady().then(() => {
   ipcMain.handle('load-config', loadConfig);
   ipcMain.on('save-config', saveConfig);
   ipcMain.on('backup-config', backupConfig);
+  ipcMain.on('export-theme', exportTheme);
   createWindow();
 })
 
@@ -72,10 +73,10 @@ function readFile(path) {
   }
 }
 
-async function handleFileSave() {
+async function handleFileSave(title, filename) {
   const { canceled, filePath } = await dialog.showSaveDialog({
-    title: "Save PROFSAVE_profile backup file",
-    defaultPath: ` ${app.getPath("desktop")}/PROFSAVE_profile_backup`,
+    title: title,
+    defaultPath: ` ${app.getPath("desktop")}/${filename}`,
   });
 
   if (canceled) {
@@ -86,7 +87,7 @@ async function handleFileSave() {
 }
 
 async function backupConfig() {
-  let savePath = await handleFileSave();
+  let savePath = await handleFileSave("Save PROFSAVE_profile backup file", "PROFSAVE_profile_backup");
   let backupData = readFile(configPath);
   fs.writeFileSync(savePath, backupData);
 }
@@ -126,4 +127,9 @@ function saveConfig(event, newColors) {
   fs.writeFile(configPath, newConfig, (err) => {
     if (err) throw err;
   });
+}
+
+async function exportTheme(event, themeJSON) {
+  let savePath = await handleFileSave("Save theme", "");
+  fs.writeFileSync(savePath, themeJSON);
 }
