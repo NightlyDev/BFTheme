@@ -8,4 +8,5 @@ contextBridge.exposeInMainWorld('api', {
   saveConfig: (newColors) => ipcRenderer.send('save-config', newColors),
   backupConfig: () => ipcRenderer.send("backup-config"),
   exportTheme: (themeJSON) => ipcRenderer.send('export-theme', themeJSON),
+  importTheme: () => ipcRenderer.invoke("import-theme"),
 })

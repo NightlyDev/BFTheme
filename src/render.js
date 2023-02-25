@@ -110,3 +110,16 @@ document.getElementById("export-theme-button").addEventListener("click", () => {
     }
     window.api.exportTheme(JSON.stringify(theme, null, 4));
 })
+
+document.getElementById("import-theme-button").addEventListener("click", async () => {
+    let themeJSON = await window.api.importTheme();
+    themeJSON = JSON.parse(themeJSON);
+    primaryTextField.value = themeJSON["GstRender.HUD-Primary"];
+    accentTextField.value = themeJSON["GstRender.HUD-Accent"];
+    friendlyTextField.value = themeJSON["GstRender.HUD-Friendly"];
+    enemyTextField.value = themeJSON["GstRender.HUD-Enemy"];
+    squadTextField.value = themeJSON["GstRender.HUD-Squad"];
+    neutralTextField.value = themeJSON["GstRender.HUD-Neutral"];
+
+    updateAllColors();
+})

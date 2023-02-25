@@ -40,6 +40,7 @@ app.whenReady().then(() => {
   ipcMain.on('save-config', saveConfig);
   ipcMain.on('backup-config', backupConfig);
   ipcMain.on('export-theme', exportTheme);
+  ipcMain.handle('import-theme', importTheme);
   createWindow();
 })
 
@@ -92,10 +93,10 @@ async function backupConfig() {
   fs.writeFileSync(savePath, backupData);
 }
 
-async function handleFileOpen() {
+async function handleFileOpen(title, defaultPath) {
   const { canceled, filePaths } = await dialog.showOpenDialog({
-    title: "Select PROFSAVE_profile file",
-    defaultPath: app.getPath("documents"),
+    title: title,
+    defaultPath: app.getPath(defaultPath),
     properties: ['openFile']
   })
 
@@ -107,7 +108,7 @@ async function handleFileOpen() {
 }
 
 async function loadConfig() {
-  configPath = await handleFileOpen();
+  configPath = await handleFileOpen("Select PROFSAVE_profile file", "documents");
   return readFile(configPath);
 }
 
@@ -132,4 +133,9 @@ function saveConfig(event, newColors) {
 async function exportTheme(event, themeJSON) {
   let savePath = await handleFileSave("Save theme", "");
   fs.writeFileSync(savePath, themeJSON);
+}
+
+async function importTheme() {
+  let themePath = await handleFileOpen("Import theme", "desktop");
+  return readFile(themePath);
 }
