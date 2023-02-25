@@ -9,17 +9,18 @@
 }
 
 input[type=text] {
-  font-size: 16pt;
-  height: 50px;
-  width: 100px;
   padding: 0;
   margin: 0;
-}
-
-input[type=color] {
-  height: 50px;
-  width: 100px;
-  border-style: none;
+  width: 125px;
+  height: 35px;
+  border-color: rgba(0,0,0,0.1);
+  background-color: #FFFFFF99;
+  border-radius: 0px 0px 5px 0px;
+  float:left;
+  text-align: center;
+  font-weight: 500;
+  font-size: 20pt;
+  z-index: 2;
 }
 
 body {
@@ -62,4 +63,30 @@ body {
 
 .config-button:active {
   background-color: var(--bfdarkblue);
+}
+
+.color-box {
+  width: 250px;
+  height: 80px;
+  background-color: #011C26;
+  border-radius: 7px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: black;
+  position: relative;
+}
+
+input[type=color] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.container {
+  column-count: 2;
 }
