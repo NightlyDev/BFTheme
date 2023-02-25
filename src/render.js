@@ -42,7 +42,7 @@ function updateAllColors() {
 }
 
 async function exportTheme() {
-    const { app ,dialog } = require('electron');
+    const { app, dialog } = require('electron');
     let theme = {
         "GstRender.HUD-Primary": primaryTextField.value,
         "GstRender.HUD-Accent": accentTextField.value,
@@ -79,7 +79,7 @@ document.getElementById("load-button").addEventListener("click", async () => {
     enemyTextField.value = formatHexString(configColors["GstRender.HUD-Enemy"].hexadecimal)
     squadTextField.value = formatHexString(configColors["GstRender.HUD-Squad"].hexadecimal)
     neutralTextField.value = formatHexString(configColors["GstRender.HUD-Neutral"].hexadecimal)
-    
+
     updateAllColors();
 })
 
@@ -97,4 +97,16 @@ document.getElementById("save-button").addEventListener("click", () => {
 
 document.getElementById("backup-button").addEventListener("click", () => {
     window.api.backupConfig();
+})
+
+document.getElementById("export-theme-button").addEventListener("click", () => {
+    const theme = {
+        "GstRender.HUD-Primary": primaryTextField.value,
+        "GstRender.HUD-Accent": accentTextField.value,
+        "GstRender.HUD-Friendly": friendlyTextField.value,
+        "GstRender.HUD-Enemy": enemyTextField.value,
+        "GstRender.HUD-Squad": squadTextField.value,
+        "GstRender.HUD-Neutral": neutralTextField.value
+    }
+    window.api.exportTheme(JSON.stringify(theme, null, 4));
 })
