@@ -60,10 +60,6 @@ async function exportTheme() {
     console.log(theme);
 }
 
-document.getElementById("import-button").addEventListener("click", () => {
-    window.api.importTheme();
-})
-
 document.getElementById("load-button").addEventListener("click", async () => {
     const data = await window.api.loadConfig();
     let configColors = {};
