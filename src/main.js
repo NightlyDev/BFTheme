@@ -38,6 +38,7 @@ const createWindow = () => {
 app.whenReady().then(() => {
   ipcMain.handle('load-config', loadConfig);
   ipcMain.on('save-config', saveConfig);
+  ipcMain.on('backup-config', backupConfig);
   createWindow();
 })
 
@@ -69,6 +70,25 @@ function readFile(path) {
   } catch (err) {
     console.log(err)
   }
+}
+
+async function handleFileSave() {
+  const { canceled, filePath } = await dialog.showSaveDialog({
+    title: "Save PROFSAVE_profile backup file",
+    defaultPath: ` ${app.getPath("desktop")}/PROFSAVE_profile_backup`,
+  });
+
+  if (canceled) {
+    return
+  } else {
+    return filePath;
+  }
+}
+
+async function backupConfig() {
+  let savePath = await handleFileSave();
+  let backupData = readFile(configPath);
+  fs.writeFileSync(savePath, backupData);
 }
 
 async function handleFileOpen() {
