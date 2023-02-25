@@ -1,4 +1,4 @@
-// Colors
+// define HTML elements
 const primaryColor = document.getElementById('primary-color-picker');
 const primaryTextField = document.getElementById('primary-color-value');
 
@@ -16,8 +16,6 @@ const squadTextField = document.getElementById('squad-color-value');
 
 const neutralColor = document.getElementById('neutral-color-picker');
 const neutralTextField = document.getElementById('neutral-color-value');
-
-// some other
 
 const allTextfields = document.querySelectorAll('input[type="text"]');
 const allColorInputs = document.querySelectorAll('input[type="color"]');
@@ -42,3 +40,61 @@ function updateAllColors() {
         color.value = color.textfield.value;
     })
 }
+
+async function exportTheme() {
+    const { app ,dialog } = require('electron');
+    let theme = {
+        "GstRender.HUD-Primary": primaryTextField.value,
+        "GstRender.HUD-Accent": accentTextField.value,
+        "GstRender.HUD-Friendly": friendlyTextField.value,
+        "GstRender.HUD-Enemy": enemyTextField.value,
+        "GstRender.HUD-Squad": squadTextField.value,
+        "GstRender.HUD-Neutral": neutralTextField.value
+    }
+
+    let json = JSON.stringify(theme);
+    dialog.showOpenDialog({
+        defaultPath: app.getPath("desktop")
+    })
+
+    console.log(theme);
+}
+
+document.getElementById("import-button").addEventListener("click", () => {
+    window.api.importTheme();
+})
+
+document.getElementById("load-button").addEventListener("click", async () => {
+    const data = await window.api.loadConfig();
+    let configColors = {};
+    for (line of data.split('\n')) {
+        if (line.includes("GstRender.HUD")) {
+            line = line.split(' ');
+            configColors[line[0]] = {
+                "signed_int": Number(line[1]),
+                "hexadecimal": DecimalHexTwosComplement(Number(line[1]))
+            };
+        }
+    }
+
+    primaryTextField.value = formatHexString(configColors["GstRender.HUD-Primary"].hexadecimal);
+    accentTextField.value = formatHexString(configColors["GstRender.HUD-Accent"].hexadecimal)
+    friendlyTextField.value = formatHexString(configColors["GstRender.HUD-Friendly"].hexadecimal)
+    enemyTextField.value = formatHexString(configColors["GstRender.HUD-Enemy"].hexadecimal)
+    squadTextField.value = formatHexString(configColors["GstRender.HUD-Squad"].hexadecimal)
+    neutralTextField.value = formatHexString(configColors["GstRender.HUD-Neutral"].hexadecimal)
+    
+    updateAllColors();
+})
+
+document.getElementById("save-button").addEventListener("click", () => {
+    let newColors = {
+        "GstRender.HUD-Primary": convertHexToInt(primaryTextField.value),
+        "GstRender.HUD-Accent": convertHexToInt(accentTextField.value),
+        "GstRender.HUD-Friendly": convertHexToInt(friendlyTextField.value),
+        "GstRender.HUD-Enemy": convertHexToInt(enemyTextField.value),
+        "GstRender.HUD-Squad": convertHexToInt(squadTextField.value),
+        "GstRender.HUD-Neutral": convertHexToInt(neutralTextField.value)
+    }
+    window.api.saveConfig(newColors);
+})
