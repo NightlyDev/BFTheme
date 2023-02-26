@@ -1,6 +1,7 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const { DecimalHexTwosComplement } = require('./convert.js');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -27,9 +28,6 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -81,7 +79,8 @@ async function handleFileSave(title, filename) {
   });
 
   if (canceled) {
-    return
+    throw Error("No file has been saved! - Window closed");
+    return;
   } else {
     return filePath;
   }
@@ -101,7 +100,7 @@ async function handleFileOpen(title, defaultPath) {
   })
 
   if (canceled) {
-    return
+    throw Error("No file selected! - Window closed")
   } else {
     return filePaths[0]
   }
@@ -109,7 +108,29 @@ async function handleFileOpen(title, defaultPath) {
 
 async function loadConfig() {
   configPath = await handleFileOpen("Select PROFSAVE_profile file", "documents");
-  return readFile(configPath);
+  if (!configPath.includes("PROFSAVE_profile")) {
+    dialog.showErrorBox("Invalid PROFSAVE_profile file", "The selected PROFSAVE_profile file is invalid.\nAre you sure you selected the right file?");
+    throw Error("Invalid file")
+  }
+  let data = readFile(configPath);
+  let hudCount = 0;
+  let configColors = {};
+  for (line of data.split('\n')) {
+    if (line.includes("GstRender.HUD")) {
+      line = line.split(' ');
+      configColors[line[0]] = {
+        "signed_int": Number(line[1]),
+        "hexadecimal": DecimalHexTwosComplement(Number(line[1]))
+      };
+      hudCount++;
+    }
+  }
+  if (hudCount === 6) {
+    return configColors;
+  } else {
+    dialog.showErrorBox("Invalid PROFSAVE_profile file", "The selected PROFSAVE_profile file is invalid.\nAre you sure you selected the right file?")
+    throw Error("Invalid file")
+  }
 }
 
 function saveConfig(event, newColors) {
@@ -131,11 +152,17 @@ function saveConfig(event, newColors) {
 }
 
 async function exportTheme(event, themeJSON) {
-  let savePath = await handleFileSave("Save theme", "");
+  let savePath = await handleFileSave("Save theme", "bftheme.json");
   fs.writeFileSync(savePath, themeJSON);
 }
 
 async function importTheme() {
   let themePath = await handleFileOpen("Import theme", "desktop");
-  return readFile(themePath);
+  let data = readFile(themePath);
+  try {
+    return JSON.parse(data);
+  } catch (e) {
+    dialog.showErrorBox("Invalid BF Theme JSON FILE", "The imported JSON file seems to be invalid. Did you select the right file?")
+    throw Error("Invalid json!");
+  }
 }

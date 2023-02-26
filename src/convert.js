@@ -35,3 +35,5 @@ function formatHexString(hexadecimal) {
 function convertHexToInt(hexadecimal) {
     return ~~parseInt(hexadecimal.slice(1, hexadecimal.length) + "00", 16); // some magic + back to two complement conversion
 }
+
+module.exports.DecimalHexTwosComplement = DecimalHexTwosComplement;
