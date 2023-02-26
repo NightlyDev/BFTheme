@@ -12,6 +12,9 @@ Because HUD colors are a bit finnicky to change in BF2042 setting menu, I create
 - Exporting/Importing themes in a `.json` format
   - (share them with your friends! 👀)
 
+## Release
+https://github.com/NightlyDev/BFTheme/releases
+
 ## How to use it?
 0. Close Battlefield 2042
 1. Open bftheme.exe and load your PROFSAVE_profile config (located in the Documents/Battlefield2042/settings folder)
