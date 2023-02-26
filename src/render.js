@@ -21,6 +21,10 @@ const allTextfields = document.querySelectorAll('input[type="text"]');
 const allColorInputs = document.querySelectorAll('input[type="color"]');
 const allColorBoxes = document.querySelectorAll('div.color-box');
 
+const loadButton = document.getElementById("load-button");
+const saveButton = document.getElementById('save-button');
+const backupButton = document.getElementById('backup-button');
+
 for (let i = 0; i < allColorInputs.length; i++) {   // bind all colors/textfields, add eventlisteners
     allColorInputs[i].textfield = allTextfields[i];
     allTextfields[i].color = allColorInputs[i];
@@ -63,22 +67,10 @@ async function exportTheme() {
     dialog.showOpenDialog({
         defaultPath: app.getPath("desktop")
     })
-
-    console.log(theme);
 }
 
-document.getElementById("load-button").addEventListener("click", async () => {
-    const data = await window.api.loadConfig();
-    let configColors = {};
-    for (line of data.split('\n')) {
-        if (line.includes("GstRender.HUD")) {
-            line = line.split(' ');
-            configColors[line[0]] = {
-                "signed_int": Number(line[1]),
-                "hexadecimal": DecimalHexTwosComplement(Number(line[1]))
-            };
-        }
-    }
+loadButton.addEventListener("click", async () => {
+    const configColors = await window.api.loadConfig();
 
     primaryTextField.value = formatHexString(configColors["GstRender.HUD-Primary"].hexadecimal);
     accentTextField.value = formatHexString(configColors["GstRender.HUD-Accent"].hexadecimal)
@@ -86,8 +78,18 @@ document.getElementById("load-button").addEventListener("click", async () => {
     enemyTextField.value = formatHexString(configColors["GstRender.HUD-Enemy"].hexadecimal)
     squadTextField.value = formatHexString(configColors["GstRender.HUD-Squad"].hexadecimal)
     neutralTextField.value = formatHexString(configColors["GstRender.HUD-Neutral"].hexadecimal)
-
     updateAllColors();
+
+    saveButton.disabled = false
+    saveButton.classList.add("valid");
+
+    backupButton.disabled = false;
+    backupButton.classList.add("valid");
+
+    loadButton.classList.add("valid")
+    document.getElementById('warning').style.display = "none";
+
+
 })
 
 document.getElementById("save-button").addEventListener("click", () => {
@@ -120,7 +122,6 @@ document.getElementById("export-theme-button").addEventListener("click", () => {
 
 document.getElementById("import-theme-button").addEventListener("click", async () => {
     let themeJSON = await window.api.importTheme();
-    themeJSON = JSON.parse(themeJSON);
     primaryTextField.value = themeJSON["GstRender.HUD-Primary"];
     accentTextField.value = themeJSON["GstRender.HUD-Accent"];
     friendlyTextField.value = themeJSON["GstRender.HUD-Friendly"];
