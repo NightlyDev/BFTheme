@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Hello World!</title>
+  <title>Battlefield HUD Manager</title>
   <link rel="stylesheet" href="index.css" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
   <script defer src="render.js"></script>
@@ -11,73 +11,81 @@
 </head>
 
 <body>
-  <h1>BF Theme App</h1>
-  <div class="container">
+  <h1>Battlefield HUD Manager</h1>
+  <div class="row">
 
-    <div>
-      <h2>Primary Color</h2>
-      <div class="color-box">
-        <input type="text" id="primary-color-value" name="primary-color-value" value="#FFFFFF" maxlength="7">
-        <input type="color" id="primary-color-picker" name="primary-color-picker" value="#FFFFFF" class="hidden">
+    <div class="container">
+
+      <div>
+        <div title="The color of your class weapons, gadgets..." class="color-box">
+          <input type="text" id="primary-color-value" name="primary-color-value" value="#FFFFFF" maxlength="7">
+          <input type="color" id="primary-color-picker" name="primary-color-picker" value="#FFFFFF" class="hidden">
+          <h2>Primary Color</h2>
+        </div>
+      </div>
+
+      <div>
+        <div title="Color which paints your hud when you are on low health. Color of altitude..." class="color-box">
+          <input type="text" id="accent-color-value" name="accent-color-value" value="#FFFFFF" maxlength="7">
+          <input type="color" id="accent-color-picker" name="accent-color-picker" value="#FFFFFF">
+          <h2>Accent Color</h2>
+        </div>
+      </div>
+
+      <div>
+
+        <div title="Color of HUD elements of your team, including player names, flag and vehicle icons" class="color-box">
+          <input type="text" id="friendly-color-value" name="friendly-color-value" value="#FFFFFF" maxlength="7">
+          <input type="color" id="friendly-color-picker" name="friendly-color-picker" value="#FFFFFF">
+          <h2>Friendly Color</h2>
+        </div>
       </div>
     </div>
+    <div class="container">
+      <div>
 
-    <div>
-      <h2>Accent Color</h2>
-      <div class="color-box">
-        <input type="text" id="accent-color-value" name="accent-color-value" value="#FFFFFF" maxlength="7">
-        <input type="color" id="accent-color-picker" name="accent-color-picker" value="#FFFFFF">
+        <div title="Color of HUD elements of the enemy team, including player names, flag and vehicle icons" class="color-box">
+          <input type="text" id="enemy-color-value" name="enemy-color-value" value="#FFFFFF" maxlength="7">
+          <input type="color" id="enemy-color-picker" name="enemy-color-picker" value="#FFFFFF">
+          <h2>Enemy Color</h2>
+        </div>
       </div>
-    </div>
 
-    <div>
-      <h2>Friendly Color</h2>
-      <div class="color-box">
-        <input type="text" id="friendly-color-value" name="friendly-color-value" value="#FFFFFF" maxlength="7">
-        <input type="color" id="friendly-color-picker" name="friendly-color-picker" value="#FFFFFF">
+      <div>
+        <div title="Color of the HUD elements of your squad, including player names, flag and vehicle icons" class="color-box">
+          <input type="text" id="squad-color-value" name="squad-color-value" value="#FFFFFF" maxlength="7">
+          <input type="color" id="squad-color-picker" name="squad-color-picker" value="#FFFFFF">
+          <h2>Squad Color</h2>
+        </div>
       </div>
-    </div>
 
-    <div>
-      <h2>Enemy Color</h2>
-      <div class="color-box">
-        <input type="text" id="enemy-color-value" name="enemy-color-value" value="#FFFFFF" maxlength="7">
-        <input type="color" id="enemy-color-picker" name="enemy-color-picker" value="#FFFFFF">
-      </div>
-    </div>
-
-    <div>
-      <h2>Squad Color</h2>
-      <div class="color-box">
-        <input type="text" id="squad-color-value" name="squad-color-value" value="#FFFFFF" maxlength="7">
-        <input type="color" id="squad-color-picker" name="squad-color-picker" value="#FFFFFF">
-      </div>
-    </div>
-
-    <div>
-      <h2>Neutral Color</h2>
-      <div class="color-box">
-        <input type="text" id="neutral-color-value" name="neutral-color-value" value="#FFFFFF" maxlength="7">
-        <input type="color" id="neutral-color-picker" name="neutral-color-picker" value="#FFFFFF">
+      <div>
+        <div title="Color of the uncapped flags, unused vehicles and ingame font" class="color-box">
+          <input type="text" id="neutral-color-value" name="neutral-color-value" value="#FFFFFF" maxlength="7">
+          <input type="color" id="neutral-color-picker" name="neutral-color-picker" value="#FFFFFF">
+          <h2>Neutral Color</h2>
+        </div>
       </div>
     </div>
 
   </div>
-  <div>
 
-    <div>
-      <h2>Config</h2>
-      <button id='backup-button' class="button backup-button">Backup</button>
+  <div class="button-elements">
+
+    <div class="config-container">
+      <span class="header">Config</span>
+      <button id='backup-button' class="button backup-button" disabled>Backup</button>
       <button id='load-button' class="button config-button">Load</button>
-      <button id='save-button' class="button config-button">Save</button>
+      <button id='save-button' class="button save-button" disabled>Save</button>
+      <p id="warning" class="warning">Please load a <b>PROFSAVE_profile</b> file to save/backup your theme!</p>
     </div>
 
-    <div>
-      <h2>Theme</h2>
-      <button id="import-theme-button" class="button">Import Theme</button>
-      <button id="export-theme-button" class="button">Export Theme</button>
+    <div class="theme-container">
+      <span class="header">Theme</span>
+      <button id="import-theme-button" class="button valid">Import</button>
+      <button id="export-theme-button" class="button valid">Export</button>
     </div>
-    
+
   </div>
 </body>
 
