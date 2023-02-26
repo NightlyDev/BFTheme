@@ -4,7 +4,7 @@ A Battlefield HUD Manager for creating/saving and patching themes for your BF204
 
 Because HUD colors are a bit finnicky to change in BF2042 setting menu, I created a tool you can use to properly change and save your HUD colors.
 
-![Overview of the app](window.png)
+<img src="window.png" alt="App overview" width=500px>
 
 ## This tool supports:
 - Hex-Colors, which you can type or just paste in
