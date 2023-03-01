@@ -18,9 +18,8 @@ https://github.com/NightlyDev/BFTheme/releases
 ## How to use it?
 0. Close Battlefield 2042
 1. Open bftheme.exe and load your PROFSAVE_profile config (located in the Documents/Battlefield2042/settings folder)
-2. Adjust your colors how you want with the color picker or the textfield
-3. Open a theme via the **Import** button or export a theme via the **Export** button
-4. Save your theme via the **Save** button
+2. Adjust your colors how you want with the color picker or the textfield or... Open a theme via the **Import** button or export a theme via the **Export** button
+3. Save your theme via the **Save** button
 
 Now your theme should be applied within the game.
 
