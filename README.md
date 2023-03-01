@@ -28,5 +28,3 @@ Now your theme should be applied within the game.
 I am currently thinking about creating a preview feature, so that you don't need to reopen the game all the time.
 There is also the import of base-16 themes in the works, which you can then drag and drop how you want.
 Additionally, the file validation is pretty naive. I am trying to get the hang of it, but so far this should be enough.
-
-The UI will also change once again as this is a pre-release of the tool.
